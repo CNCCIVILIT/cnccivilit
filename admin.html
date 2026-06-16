@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - CNC Consultancy</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<div id="loginPage" class="login-page">
+  <div class="login-box">
+    <div class="text-center mb-4">
+      <h2><span style="color:#009688">CNC</span> Admin</h2>
+      <p>Enter password to access dashboard</p>
+    </div>
+    <form onsubmit="handleLogin(event)">
+      <div class="mb-3">
+        <input type="password" id="loginPassword" class="form-control" placeholder="Password" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Login</button>
+      <div id="loginError" class="login-error text-center">Incorrect password. Try <strong>admin123</strong></div>
+    </form>
+    <div class="text-center mt-3">
+      <a href="index.html" class="text-decoration-none small" style="color:#64748B"><i class="bi bi-arrow-left"></i> Back to Website</a>
+    </div>
+  </div>
+</div>
+
+<div id="adminApp" style="display:none">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>CNC Admin</h2>
+      <small>Dashboard v1.0</small>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" data-section="dashboard"><i class="bi bi-speedometer2"></i> Dashboard</div>
+      <div class="nav-item" data-section="hero"><i class="bi bi-images"></i> Hero Slides</div>
+      <div class="nav-item" data-section="about"><i class="bi bi-image"></i> About Image</div>
+      <div class="nav-item" data-section="services"><i class="bi bi-grid"></i> Services</div>
+      <div class="nav-item" data-section="team"><i class="bi bi-people"></i> Team Members</div>
+      <div class="nav-item" data-section="projects"><i class="bi bi-folder"></i> Projects</div>
+      <div class="nav-item" data-section="gallery"><i class="bi bi-collection"></i> Gallery</div>
+      <div class="nav-item" data-section="testimonials"><i class="bi bi-chat-quote"></i> Testimonials</div>
+      <div class="nav-item" data-section="clients"><i class="bi bi-building"></i> Clients</div>
+      <div class="nav-item" data-section="stats"><i class="bi bi-bar-chart"></i> Stats</div>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="javascript:void(0)" onclick="logout()"><i class="bi bi-box-arrow-left"></i> Logout</a>
+      <a href="index.html" class="mt-2"><i class="bi bi-house"></i> View Website</a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="top-bar">
+      <div>
+        <button class="sidebar-toggle" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+        <h1 id="pageTitle">Dashboard</h1>
+      </div>
+      <div>
+        <button class="btn btn-outline-danger btn-sm me-2" onclick="resetAllData()"><i class="bi bi-arrow-counterclockwise"></i> Reset All Data</button>
+        <a href="index.html" class="btn btn-outline-dark btn-sm"><i class="bi bi-eye"></i> View Site</a>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="section-dashboard" class="page-section active">
+      <div class="row g-4">
+        <div class="col-md-3"><div class="card text-center p-4"><h3 style="color:#009688;font-size:2.5rem" id="dashTeamCount">0</h3><p class="text-muted mb-0">Team Members</p></div></div>
+        <div class="col-md-3"><div class="card text-center p-4"><h3 style="color:#009688;font-size:2.5rem" id="dashServiceCount">0</h3><p class="text-muted mb-0">Services</p></div></div>
+        <div class="col-md-3"><div class="card text-center p-4"><h3 style="color:#009688;font-size:2.5rem" id="dashProjectCount">0</h3><p class="text-muted mb-0">Projects</p></div></div>
+        <div class="col-md-3"><div class="card text-center p-4"><h3 style="color:#009688;font-size:2.5rem" id="dashGalleryCount">0</h3><p class="text-muted mb-0">Gallery Items</p></div></div>
+      </div>
+      <div class="card mt-4">
+        <div class="card-body">
+          <h5>Quick Actions</h5>
+          <div class="d-flex flex-wrap gap-2 mt-3">
+            <a href="javascript:void(0)" class="btn btn-primary" onclick="navigateTo('team')"><i class="bi bi-person-plus"></i> Add Member</a>
+            <a href="javascript:void(0)" class="btn btn-primary" onclick="navigateTo('services')"><i class="bi bi-plus-circle"></i> Add Service</a>
+            <a href="javascript:void(0)" class="btn btn-primary" onclick="navigateTo('gallery')"><i class="bi bi-plus-circle"></i> Add Gallery Item</a>
+            <a href="javascript:void(0)" class="btn btn-primary" onclick="navigateTo('projects')"><i class="bi bi-plus-circle"></i> Add Project</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO SLIDES -->
+    <div id="section-hero" class="page-section">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Hero Slides</span>
+          <button class="btn btn-primary btn-sm" onclick="document.getElementById('heroForm').scrollIntoView({behavior:'smooth'})"><i class="bi bi-plus-lg"></i> Add Slide</button>
+        </div>
+        <div class="card-body"><div class="table-responsive"><table class="table"><thead><tr><th>Image</th><th>Badge</th><th>Title</th><th>Actions</th></tr></thead><tbody id="heroTableBody"></tbody></table></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span id="heroFormTitle">Add Slide</span></div>
+        <div class="card-body">
+          <form id="heroForm" onsubmit="saveHeroSlide(event)">
+            <div class="mb-3">
+              <label class="form-label">Background Image</label>
+              <input type="url" name="image" class="form-control mb-2" placeholder="Image URL" id="heroImageUrl" required>
+              <div class="text-center my-2"><small class="text-muted">— OR —</small></div>
+              <input type="file" class="form-control" accept="image/*" id="heroImageFile" onchange="previewHeroImage(event)">
+              <div id="heroImagePreview" class="mt-2 text-center" style="display:none">
+                <img src="" alt="Preview" class="img-fluid rounded" style="max-height:150px">
+              </div>
+            </div>
+            <div class="mb-3"><label class="form-label">Badge Text</label><input type="text" name="badge" class="form-control" required placeholder="Welcome to CNC Consultancy"></div>
+            <div class="mb-3"><label class="form-label">Title</label><input type="text" name="title" class="form-control" required placeholder="Civil Engineering & IT Solutions"></div>
+            <div class="mb-3"><label class="form-label">Description</label><textarea name="desc" class="form-control" rows="2" required placeholder="Professional services..."></textarea></div>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Slide</button>
+            <button type="button" id="heroCancelBtn" class="btn btn-secondary" style="display:none" onclick="cancelHeroEdit()">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT IMAGE -->
+    <div id="section-about" class="page-section">
+      <div class="card">
+        <div class="card-header">About Section Image</div>
+        <div class="card-body">
+          <div id="aboutPreview" class="mb-3"></div>
+          <form onsubmit="saveAboutImage(event)">
+            <div class="mb-3">
+              <label class="form-label">Image</label>
+              <input type="url" id="aboutImageInput" class="form-control mb-2" placeholder="Image URL" required>
+              <div class="text-center my-2"><small class="text-muted">— OR —</small></div>
+              <input type="file" class="form-control" accept="image/*" id="aboutImageFile" onchange="previewAboutImage(event)">
+              <div id="aboutImagePreview" class="mt-2 text-center" style="display:none">
+                <img src="" alt="Preview" class="img-fluid rounded" style="max-height:300px">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Update Image</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICES -->
+    <div id="section-services" class="page-section">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Services</span>
+          <button class="btn btn-primary btn-sm" onclick="document.getElementById('serviceForm').scrollIntoView({behavior:'smooth'})"><i class="bi bi-plus-lg"></i> Add Service</button>
+        </div>
+        <div class="card-body"><div class="table-responsive"><table class="table"><thead><tr><th>Category</th><th>Title</th><th>Description</th><th>Actions</th></tr></thead><tbody id="servicesTableBody"></tbody></table></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span id="serviceFormTitle">Add Service</span></div>
+        <div class="card-body">
+          <form id="serviceForm" onsubmit="saveService(event)">
+            <div class="mb-3"><label class="form-label">Category</label><select name="category" class="form-select"><option value="civil">Civil Engineering</option><option value="it">IT Solutions</option><option value="robotics">Robotics & AI</option></select></div>
+            <div class="mb-3"><label class="form-label">Title</label><input type="text" name="title" class="form-control" required></div>
+            <div class="mb-3"><label class="form-label">Description</label><textarea name="description" class="form-control" rows="2" required></textarea></div>
+            <div class="mb-3"><label class="form-label">Bootstrap Icon Class</label><input type="text" name="icon" class="form-control" required placeholder="bi-building, bi-globe, bi-robot"></div>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Service</button>
+            <button type="button" id="serviceCancelBtn" class="btn btn-secondary" style="display:none" onclick="cancelServiceEdit()">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEAM -->
+    <div id="section-team" class="page-section">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Team Members</span>
+          <button class="btn btn-primary btn-sm" onclick="document.getElementById('teamForm').scrollIntoView({behavior:'smooth'})"><i class="bi bi-plus-lg"></i> Add Member</button>
+        </div>
+        <div class="card-body"><div class="table-responsive"><table class="table"><thead><tr><th>Photo</th><th>Name</th><th>Position</th><th>Qualification</th><th>Experience</th><th>Social</th><th>Actions</th></tr></thead><tbody id="teamTableBody"></tbody></table></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span id="teamFormTitle">Add Team Member</span></div>
+        <div class="card-body">
+          <form id="teamForm" onsubmit="saveTeam(event)">
+            <div class="form-row">
+              <div class="mb-3"><label class="form-label">Full Name</label><input type="text" name="name" class="form-control" required></div>
+              <div class="mb-3"><label class="form-label">Position</label><input type="text" name="position" class="form-control" required></div>
+              <div class="mb-3"><label class="form-label">Qualification</label><input type="text" name="qualification" class="form-control" required></div>
+              <div class="mb-3"><label class="form-label">Experience</label><input type="text" name="exp" class="form-control" required placeholder="10+ Years Experience"></div>
+              <div class="mb-3">
+                <label class="form-label">Photo</label>
+                <input type="url" name="image" class="form-control mb-2" placeholder="Photo URL" id="teamImageUrl">
+                <div class="text-center my-2"><small class="text-muted">— OR —</small></div>
+                <input type="file" class="form-control" accept="image/*" id="teamImageFile" onchange="previewTeamImage(event)">
+                <div id="teamImagePreview" class="mt-2 text-center" style="display:none">
+                  <img src="" alt="Preview" class="img-fluid rounded" style="max-height:150px">
+                </div>
+              </div>
+              <div class="mb-3"><label class="form-label">LinkedIn URL</label><input type="url" name="linkedin" class="form-control" placeholder="#"></div>
+              <div class="mb-3"><label class="form-label">Email</label><input type="text" name="email" class="form-control" placeholder="#"></div>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Member</button>
+            <button type="button" id="teamCancelBtn" class="btn btn-secondary" style="display:none" onclick="cancelTeamEdit()">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <div id="section-projects" class="page-section">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Projects</span>
+          <button class="btn btn-primary btn-sm" onclick="document.getElementById('projectForm').scrollIntoView({behavior:'smooth'})"><i class="bi bi-plus-lg"></i> Add Project</button>
+        </div>
+        <div class="card-body"><div class="table-responsive"><table class="table"><thead><tr><th>Image</th><th>Title</th><th>Client</th><th>Category</th><th>Date</th><th>Actions</th></tr></thead><tbody id="projectsTableBody"></tbody></table></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span id="projectFormTitle">Add Project</span></div>
+        <div class="card-body">
+          <form id="projectForm" onsubmit="saveProject(event)">
+            <div class="form-row">
+              <div class="mb-3"><label class="form-label">Title</label><input type="text" name="title" class="form-control" required></div>
+              <div class="mb-3"><label class="form-label">Client</label><input type="text" name="client" class="form-control" required></div>
+              <div class="mb-3"><label class="form-label">Category</label><select name="category" class="form-select"><option value="building">Building Design</option><option value="infrastructure">Infrastructure</option><option value="web">Web Development</option><option value="software">Software</option><option value="robotics">Robotics & AI</option></select></div>
+              <div class="mb-3"><label class="form-label">Date</label><input type="text" name="date" class="form-control" required placeholder="2025"></div>
+              <div class="mb-3">
+                <label class="form-label">Image</label>
+                <input type="url" name="image" class="form-control mb-2" placeholder="Image URL" id="projectImageUrl">
+                <div class="text-center my-2"><small class="text-muted">— OR —</small></div>
+                <input type="file" class="form-control" accept="image/*" id="projectImageFile" onchange="previewProjectImage(event)">
+                <div id="projectImagePreview" class="mt-2 text-center" style="display:none">
+                  <img src="" alt="Preview" class="img-fluid rounded" style="max-height:150px">
+                </div>
+              </div>
+            </div>
+            <div class="mb-3"><label class="form-label">Description</label><textarea name="description" class="form-control" rows="2" required></textarea></div>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Project</button>
+            <button type="button" id="projectCancelBtn" class="btn btn-secondary" style="display:none" onclick="cancelProjectEdit()">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- GALLERY -->
+    <div id="section-gallery" class="page-section">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Gallery</span>
+          <button class="btn btn-primary btn-sm" onclick="document.getElementById('galleryForm').scrollIntoView({behavior:'smooth'})"><i class="bi bi-plus-lg"></i> Add Item</button>
+        </div>
+        <div class="card-body"><div class="table-responsive"><table class="table"><thead><tr><th>Image</th><th>Title</th><th>Description</th><th>Category</th><th>Actions</th></tr></thead><tbody id="galleryTableBody"></tbody></table></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span id="galleryFormTitle">Add Gallery Item</span></div>
+        <div class="card-body">
+          <form id="galleryForm" onsubmit="saveGallery(event)">
+            <div class="form-row">
+              <div class="mb-3">
+                <label class="form-label">Image</label>
+                <input type="url" name="image" class="form-control mb-2" placeholder="Image URL" id="galleryImageUrl">
+                <div class="text-center my-2"><small class="text-muted">— OR —</small></div>
+                <input type="file" name="imageFile" class="form-control" accept="image/*" id="galleryImageFile" onchange="previewGalleryImage(event)">
+                <div id="galleryImagePreview" class="mt-2 text-center" style="display:none">
+                  <img src="" alt="Preview" class="img-fluid rounded" style="max-height:150px">
+                </div>
+              </div>
+              <div class="mb-3"><label class="form-label">Category</label><select name="category" class="form-select"><option value="civil">Civil Engineering</option><option value="it">IT Projects</option><option value="robotics">Robotics & AI</option></select></div>
+              <div class="mb-3"><label class="form-label">Title</label><input type="text" name="title" class="form-control" required></div>
+              <div class="mb-3"><label class="form-label">Description</label><input type="text" name="description" class="form-control" required></div>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Item</button>
+            <button type="button" id="galleryCancelBtn" class="btn btn-secondary" style="display:none" onclick="cancelGalleryEdit()">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- TESTIMONIALS -->
+    <div id="section-testimonials" class="page-section">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Testimonials</span>
+          <button class="btn btn-primary btn-sm" onclick="document.getElementById('testimonialForm').scrollIntoView({behavior:'smooth'})"><i class="bi bi-plus-lg"></i> Add Testimonial</button>
+        </div>
+        <div class="card-body"><div class="table-responsive"><table class="table"><thead><tr><th>Photo</th><th>Name</th><th>Title</th><th>Rating</th><th>Text</th><th>Actions</th></tr></thead><tbody id="testimonialsTableBody"></tbody></table></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span id="testimonialFormTitle">Add Testimonial</span></div>
+        <div class="card-body">
+          <form id="testimonialForm" onsubmit="saveTestimonial(event)">
+            <div class="form-row">
+              <div class="mb-3"><label class="form-label">Name</label><input type="text" name="name" class="form-control" required></div>
+              <div class="mb-3"><label class="form-label">Title</label><input type="text" name="title" class="form-control" required placeholder="CEO, Company Name"></div>
+              <div class="mb-3">
+                <label class="form-label">Photo</label>
+                <input type="url" name="image" class="form-control mb-2" placeholder="Photo URL" id="testimonialImageUrl">
+                <div class="text-center my-2"><small class="text-muted">— OR —</small></div>
+                <input type="file" class="form-control" accept="image/*" id="testimonialImageFile" onchange="previewTestimonialImage(event)">
+                <div id="testimonialImagePreview" class="mt-2 text-center" style="display:none">
+                  <img src="" alt="Preview" class="img-fluid rounded" style="max-height:150px">
+                </div>
+              </div>
+              <div class="mb-3"><label class="form-label">Rating (1-5)</label><input type="number" name="rating" class="form-control" min="1" max="5" value="5"></div>
+            </div>
+            <div class="mb-3"><label class="form-label">Testimonial Text</label><textarea name="text" class="form-control" rows="3" required></textarea></div>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Testimonial</button>
+            <button type="button" id="testimonialCancelBtn" class="btn btn-secondary" style="display:none" onclick="cancelTestimonialEdit()">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLIENTS -->
+    <div id="section-clients" class="page-section">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Clients / Partners</span>
+          <button class="btn btn-primary btn-sm" onclick="document.getElementById('clientForm').scrollIntoView({behavior:'smooth'})"><i class="bi bi-plus-lg"></i> Add Client</button>
+        </div>
+        <div class="card-body"><div class="table-responsive"><table class="table"><thead><tr><th>Icon</th><th>Name</th><th>Icon Class</th><th>Actions</th></tr></thead><tbody id="clientsTableBody"></tbody></table></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span id="clientFormTitle">Add Client</span></div>
+        <div class="card-body">
+          <form id="clientForm" onsubmit="saveClient(event)">
+            <div class="form-row">
+              <div class="mb-3"><label class="form-label">Client Name</label><input type="text" name="name" class="form-control" required></div>
+              <div class="mb-3"><label class="form-label">Bootstrap Icon Class</label><input type="text" name="icon" class="form-control" required placeholder="bi-building, bi-bank, bi-shop"></div>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Client</button>
+            <button type="button" id="clientCancelBtn" class="btn btn-secondary" style="display:none" onclick="cancelClientEdit()">Cancel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div id="section-stats" class="page-section">
+      <div class="card">
+        <div class="card-header">Stats Counters</div>
+        <div class="card-body">
+          <div id="statsPreview" class="row g-3 mb-4"></div>
+          <form onsubmit="saveStats(event)">
+            <div class="mb-3"><label class="form-label">Stats JSON</label><textarea id="statsData" class="form-control" rows="6" placeholder='[{"label":"Projects Completed","value":100},{"label":"Happy Clients","value":50},{"label":"Years Experience","value":10},{"label":"Professional Experts","value":20}]'></textarea><small class="text-muted">Enter as array of objects with "label" and "value" fields.</small></div>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Save Stats</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div id="toastContainer" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
