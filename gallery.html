@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery | NovaBuild Tech</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quakez&display=swap">
+  <style>
+    .gallery { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .gallery figure { background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform .2s; }
+    .gallery figure:hover { transform: translateY(-5px); }
+    .gallery figcaption { padding: 10px 14px; font-weight: 600; color: var(--blue); }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav-bar">
+    <span class="logo-text">CNC <em>Consultancy</em></span>
+    <button class="nav-toggle">Menu</button>
+    <nav><ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="rnd.html">R&amp;D</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <div class="section-title"><h2>Gallery</h2><p>A glimpse of our work across Civil &amp; IT.</p></div>
+    <div class="gallery">
+      <figure><img src="img/g1.svg" alt="Building project"><figcaption>Commercial Building</figcaption></figure>
+      <figure><img src="img/g2.svg" alt="Software project"><figcaption>Software Platform</figcaption></figure>
+      <figure><img src="img/g3.svg" alt="IoT site"><figcaption>Smart IoT Setup</figcaption></figure>
+      <figure><img src="img/g4.svg" alt="Bridge project"><figcaption>Bridge Structure</figcaption></figure>
+      <figure><img src="img/g5.svg" alt="Drainage work"><figcaption>Drainage System</figcaption></figure>
+      <figure><img src="img/g6.svg" alt="Cloud services"><figcaption>Cloud Solutions</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<footer><div class="container">© 2026 <span>NovaBuild Tech</span> — Civil Engineering &amp; IT Solutions</div></footer>
+<script src="js/script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
