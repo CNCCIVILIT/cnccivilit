@@ -129,7 +129,8 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--blue-2); bo
 textarea { min-height: 130px; resize: vertical; }
 
 .contact-grid { display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-.map-placeholder { background: var(--slate-light); border-radius: var(--radius); min-height: 260px; display: grid; place-items: center; color: var(--slate); font-weight: 600; border: 2px dashed #94a3b8; text-align: center; padding: 20px; }
+.map-frame { display: block; width: 100%; aspect-ratio: 4 / 3; min-height: 260px; border: 0; border-radius: var(--radius); box-shadow: var(--shadow); background: var(--slate-light); }
+.map-note { margin: 10px 0 0; font-size: .86rem; }
 
 /* ---------- Teams page ---------- */
 .page-hero { background: linear-gradient(90deg, var(--blue), var(--blue-2)); color: var(--white); padding: 70px 0; text-align: center; }
