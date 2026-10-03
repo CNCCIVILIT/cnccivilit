@@ -34,6 +34,27 @@ nav a { font-size: .92rem; padding: 6px 4px; position: relative; }
 nav a::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 0; background: var(--amber-2); transition: width .25s; }
 nav a:hover::after, nav a.active::after { width: 100%; }
 
+/* ---------- Nav "Teams" dropdown (progressive enhancement, injected by js) ----------
+   The <li> must stay a normal block box so the anchor lays out and underlines
+   exactly like every other nav item. Only the caret lives inside the anchor;
+   the tap-target button is desktop-hidden so it cannot shift the label. */
+nav li.has-sub { position: relative; }
+nav .caret { display: inline-block; font-size: .62em; line-height: 1; margin-left: 3px; vertical-align: middle; opacity: .85; transition: transform .2s; }
+nav li.has-sub.open .caret { transform: rotate(180deg); }
+.sub-toggle { display: none; background: none; border: none; color: rgba(255,255,255,.8); cursor: pointer; font-size: .7rem; line-height: 1; padding: 6px 4px 6px 0; border-radius: 6px; }
+.sub-toggle:hover { background: rgba(255,255,255,.12); }
+nav ul.sub { display: none; position: absolute; top: 100%; right: 0; width: min(460px, 92vw); background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 10px 12px; grid-template-columns: repeat(2, minmax(180px, 1fr)); gap: 2px 8px; z-index: 60; }
+nav li.has-sub:hover ul.sub, nav li.has-sub:focus-within ul.sub, nav li.has-sub.open ul.sub { display: grid; }
+nav ul.sub .sub-label { grid-column: 1 / -1; font-size: .64rem; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--slate); padding: 10px 10px 3px; }
+nav ul.sub .sub-label:first-child { padding-top: 2px; }
+nav ul.sub a { display: block; padding: 7px 10px; border-radius: 8px; color: var(--text); font-size: .86rem; line-height: 1.35; }
+nav ul.sub a strong { display: block; color: var(--blue); font-size: .88rem; font-weight: 700; }
+nav ul.sub a em { display: block; color: var(--slate); font-style: normal; font-size: .74rem; }
+nav ul.sub a:hover { background: var(--bg); }
+nav ul.sub a.civil strong { color: #a16207; }
+nav ul.sub a.it strong { color: var(--blue-2); }
+nav ul.sub a::after { display: none; }
+
 /* ---------- Buttons ---------- */
 .btn { display: inline-block; padding: 12px 24px; border-radius: 999px; font-weight: 600; border: none; cursor: pointer; transition: transform .2s, box-shadow .2s; }
 .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
@@ -110,6 +131,86 @@ textarea { min-height: 130px; resize: vertical; }
 .contact-grid { display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 .map-placeholder { background: var(--slate-light); border-radius: var(--radius); min-height: 260px; display: grid; place-items: center; color: var(--slate); font-weight: 600; border: 2px dashed #94a3b8; text-align: center; padding: 20px; }
 
+/* ---------- Teams page ---------- */
+.page-hero { background: linear-gradient(90deg, var(--blue), var(--blue-2)); color: var(--white); padding: 70px 0; text-align: center; }
+.page-hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 10px; }
+.page-hero h1 .accent { color: var(--amber-2); }
+.page-hero p { color: #cbd5e1; max-width: 640px; margin: 0 auto; }
+.team-head { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; }
+.team-head h3 { font-size: 1.25rem; }
+.member-grid { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.member { background: #fff; border-radius: var(--radius); padding: 26px 22px; box-shadow: var(--shadow); border-top: 4px solid var(--blue-2); text-align: center; transition: transform .2s; }
+.member:hover { transform: translateY(-5px); }
+.member.civil { border-top-color: var(--amber-2); }
+.avatar { width: 74px; height: 74px; margin: 0 auto 14px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 1.35rem; color: #fff; background: linear-gradient(135deg, var(--blue), var(--blue-2)); letter-spacing: 1px; }
+.member.civil .avatar { background: linear-gradient(135deg, #ca8a04, var(--amber-2)); color: #1f2937; }
+.member h3 { margin-bottom: 4px; color: var(--blue); }
+.member .role { color: var(--blue-2); font-weight: 600; font-size: .86rem; margin-bottom: 10px; }
+.member.civil .role { color: #ca8a04; }
+.member p { color: var(--slate); font-size: .92rem; }
+.member .tags { justify-content: center; }
+
+/* Team member photo */
+.member-photo { display: block; margin: -14px -10px 16px; border-radius: 10px; overflow: hidden; box-shadow: 0 6px 18px rgba(15, 43, 70, .18); }
+.member-photo img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; transition: transform .3s; }
+.member-photo:hover img { transform: scale(1.06); }
+
+/* Key/value details under a member photo */
+.facts { list-style: none; text-align: left; margin-top: 14px; border-top: 1px solid var(--slate-light); }
+.facts li { display: flex; justify-content: space-between; gap: 10px; padding: 6px 2px; border-bottom: 1px solid var(--slate-light); font-size: .8rem; }
+.facts b { color: var(--slate); font-weight: 600; }
+.facts span { color: var(--text); font-weight: 600; text-align: right; }
+.member.civil .facts b { color: #a16207; }
+
+.member-link { display: inline-block; margin-top: 16px; font-weight: 600; font-size: .88rem; color: var(--blue-2); }
+.member.civil .member-link { color: #a16207; }
+.member-link:hover { text-decoration: underline; }
+
+/* Squad cards with banner image */
+.card.figure { padding: 0; overflow: hidden; }
+.card.figure .fig-body { padding: 20px 24px 24px; }
+.card.figure img { width: 100%; height: auto; aspect-ratio: 12 / 7; object-fit: cover; }
+.card.figure h3 { margin-top: 14px; }
+
+/* ---------- Member profile page ---------- */
+.profile-hero { background: linear-gradient(90deg, var(--blue), var(--blue-2)); color: var(--white); padding: 52px 0 62px; }
+.profile-hero .crumbs { font-size: .82rem; color: #94a3b8; margin-bottom: 18px; }
+.profile-hero .crumbs a { color: #cbd5e1; }
+.profile-hero .crumbs a:hover { color: var(--amber-2); }
+.profile-hero .crumbs span { margin: 0 6px; }
+.profile-grid { display: grid; gap: 34px; grid-template-columns: minmax(260px, 340px) 1fr; align-items: start; margin-top: -46px; }
+.profile-photo { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; border-top: 4px solid var(--blue-2); }
+.profile-photo.civil { border-top-color: var(--amber-2); }
+.profile-photo img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+.profile-photo figcaption { padding: 14px 16px; font-size: .82rem; color: var(--slate); border-top: 1px solid var(--slate-light); }
+.profile-body { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 30px; border-top: 4px solid var(--blue-2); }
+.profile-body.civil { border-top-color: var(--amber-2); }
+.profile-body h1 { font-size: clamp(1.7rem, 4vw, 2.6rem); color: var(--blue); }
+.profile-body .role { color: var(--blue-2); font-weight: 600; margin: 6px 0 18px; }
+.profile-body.civil .role { color: #ca8a04; }
+.badge { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; background: var(--slate-light); color: var(--slate); margin-bottom: 12px; }
+.badge.civil { background: var(--amber-soft); color: #854d0e; }
+.badge.it { background: var(--blue); color: #fff; }
+.profile-facts { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); margin: 22px 0; padding: 20px; background: var(--bg); border-radius: 12px; }
+.profile-facts div { font-size: .82rem; }
+.profile-facts b { display: block; color: var(--slate); font-weight: 600; margin-bottom: 2px; }
+.profile-body h2 { font-size: 1.2rem; color: var(--blue); margin: 26px 0 10px; }
+.focus-list { list-style: none; display: grid; gap: 8px 18px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.focus-list li { position: relative; padding-left: 24px; color: var(--slate); font-size: .94rem; }
+.focus-list li::before { content: ""; position: absolute; left: 0; top: .55em; width: 10px; height: 10px; border-radius: 3px; background: var(--blue-2); }
+.profile-body.civil .focus-list li::before { background: var(--amber-2); }
+.work-list { list-style: none; display: grid; gap: 12px; }
+.work-list li { padding: 14px 16px; border-left: 3px solid var(--blue-2); background: var(--bg); border-radius: 0 10px 10px 0; }
+.profile-body.civil .work-list li { border-left-color: var(--amber-2); }
+.work-list b { display: block; color: var(--blue); }
+.work-list span { color: var(--slate); font-size: .9rem; }
+.profile-contact { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+.profile-nav { display: flex; justify-content: space-between; gap: 14px; margin-top: 30px; flex-wrap: wrap; }
+.profile-nav a { font-weight: 600; color: var(--blue-2); }
+.profile-nav a:hover { text-decoration: underline; }
+.empty-note { text-align: center; padding: 60px 0; }
+.empty-note p { color: var(--slate); margin-bottom: 18px; }
+
 /* ---------- Footer ---------- */
 footer { background: var(--blue); color: #cbd5e1; padding: 30px 0; text-align: center; margin-top: 40px; }
 footer span { color: var(--amber-2); }
@@ -119,4 +220,10 @@ footer span { color: var(--amber-2); }
   nav ul { display: none; width: 100%; flex-direction: column; padding-top: 10px; }
   nav ul.open { display: flex; }
   .hero { padding: 60px 0; }
+  nav .caret { display: none; }
+  .sub-toggle { display: block; }
+  nav ul.sub { position: static; width: 100%; max-width: none; box-shadow: none; padding: 6px 0 4px 14px; grid-template-columns: 1fr; }
+  nav ul.sub .sub-label { padding: 10px 10px 2px; }
+  .profile-grid { grid-template-columns: 1fr; margin-top: -30px; }
+  .profile-grid figure { max-width: 300px; margin: 0 auto; }
 }
