@@ -182,7 +182,6 @@ textarea { min-height: 130px; resize: vertical; }
 .profile-photo { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; border-top: 4px solid var(--blue-2); }
 .profile-photo.civil { border-top-color: var(--amber-2); }
 .profile-photo img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
-.profile-photo figcaption { padding: 14px 16px; font-size: .82rem; color: var(--slate); border-top: 1px solid var(--slate-light); }
 .profile-body { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 30px; border-top: 4px solid var(--blue-2); }
 .profile-body.civil { border-top-color: var(--amber-2); }
 .profile-body h1 { font-size: clamp(1.7rem, 4vw, 2.6rem); color: var(--blue); }

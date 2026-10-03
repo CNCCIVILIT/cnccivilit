@@ -129,8 +129,7 @@ if (profileRoot && typeof TEAM !== 'undefined') {
       <div class="container profile-grid">
         <figure class="profile-photo ${member.division}">
           <img src="img/team/${member.slug}.svg" width="320" height="400"
-               alt="Sample portrait of ${esc(member.name)}, ${esc(member.role)}">
-          <figcaption>Sample profile photo — replace with a real portrait at <code>img/team/${member.slug}.svg</code>.</figcaption>
+               alt="Portrait of ${esc(member.name)}, ${esc(member.role)}">
         </figure>
 
         <article class="profile-body ${member.division}">
