@@ -62,12 +62,28 @@ nav ul.sub a::after { display: none; }
 .btn-amber { background: var(--amber-2); color: #1f2937; }
 .btn-outline { border: 2px solid #fff; color: #fff; }
 
-/* ---------- Hero ---------- */
-.hero { background: linear-gradient(rgba(15,43,70,.82), rgba(22,64,95,.82)), url('../img/hero.svg') center/cover no-repeat; color: #fff; padding: 120px 0; text-align: center; }
+/* ---------- Hero ----------
+   The photos live in their own absolutely-positioned layer so the section keeps
+   its normal flow height and the copy simply cross-fades over the top. */
+.hero { position: relative; overflow: hidden; background: var(--blue); color: #fff; padding: 120px 0; text-align: center; }
+.hero-slides { position: absolute; inset: 0; z-index: 0; }
+.hero-slide { position: absolute; inset: 0; opacity: 0; background-position: center; background-size: cover; background-repeat: no-repeat; transition: opacity 1.2s ease; }
+.hero-slide.is-active { opacity: 1; }
+/* Blue wash keeps the white heading readable over any photo. */
+.hero::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(rgba(15,43,70,.82), rgba(22,64,95,.82)); }
+.hero > .container, .hero-dots { position: relative; z-index: 2; }
 .hero h1 { font-size: clamp(1.9rem, 4vw, 3.2rem); margin-bottom: 14px; }
 .hero h1 .accent { color: var(--amber-2); }
 .hero p { max-width: 640px; margin: 0 auto 28px; color: #cbd5e1; }
 .hero .cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.hero-dots { display: flex; gap: 10px; justify-content: center; margin-top: 36px; }
+.hero-dots button { width: 12px; height: 12px; padding: 0; border-radius: 50%; border: 2px solid rgba(255,255,255,.75); background: transparent; cursor: pointer; transition: background .2s, transform .2s; }
+.hero-dots button:hover { transform: scale(1.2); }
+.hero-dots button.active { background: var(--amber-2); border-color: var(--amber-2); }
+/* Visitors who ask for less motion get a hard cut instead of a fade. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide { transition: none; }
+}
 
 /* ---------- Sections ---------- */
 section { padding: 64px 0; }
@@ -215,6 +231,25 @@ textarea { min-height: 130px; resize: vertical; }
 footer { background: var(--blue); color: #cbd5e1; padding: 30px 0; text-align: center; margin-top: 40px; }
 footer span { color: var(--amber-2); }
 
+/* ---------- Floating WhatsApp button ----------
+   The wrap holds the fixed corner position; the pill and the "+" toggle sit
+   inside it, so the quick-reply menu can be positioned against the pair. */
+.wa-wrap { position: fixed; right: 22px; bottom: 22px; z-index: 40; display: flex; align-items: center; gap: 10px; }
+.whatsapp-fab { display: inline-flex; align-items: center; gap: 10px; padding: 13px 18px; border-radius: 999px; background: #25d366; color: #fff; box-shadow: 0 10px 25px rgba(37, 211, 102, .45); transition: transform .2s, box-shadow .2s; }
+.whatsapp-fab:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(37, 211, 102, .6); }
+.whatsapp-fab:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.whatsapp-fab svg { width: 26px; height: 26px; fill: currentColor; flex: none; }
+.whatsapp-fab-label { font-size: .85rem; font-weight: 600; white-space: nowrap; }
+.wa-more { width: 44px; height: 44px; flex: none; display: inline-flex; align-items: center; justify-content: center; border: none; border-radius: 50%; cursor: pointer; background: var(--blue); color: #fff; font-size: 1.5rem; line-height: 1; padding: 0 0 3px; box-shadow: 0 10px 25px rgba(15, 43, 70, .4); transition: transform .2s, background .2s; }
+.wa-more:hover { background: var(--blue-2); }
+.wa-more:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+/* Open state turns the "+" into an "x". */
+.wa-more[aria-expanded="true"] { transform: rotate(45deg); }
+.wa-menu { position: absolute; right: 0; bottom: calc(100% + 12px); display: grid; gap: 8px; justify-items: end; }
+.wa-menu[hidden] { display: none; }
+.wa-menu a { padding: 10px 16px; border-radius: 999px; border-left: 4px solid var(--amber-2); background: #fff; color: var(--blue); font-size: .85rem; font-weight: 600; white-space: nowrap; box-shadow: var(--shadow); transition: transform .2s; }
+.wa-menu a:hover { transform: translateX(-4px); }
+
 @media (max-width: 720px) {
   .nav-toggle { display: inline-block; }
   nav ul { display: none; width: 100%; flex-direction: column; padding-top: 10px; }
@@ -226,4 +261,8 @@ footer span { color: var(--amber-2); }
   nav ul.sub .sub-label { padding: 10px 10px 2px; }
   .profile-grid { grid-template-columns: 1fr; margin-top: -30px; }
   .profile-grid figure { max-width: 300px; margin: 0 auto; }
+  /* Icon only, so the pill never covers the footer's own links. */
+  .wa-wrap { right: 16px; bottom: 16px; }
+  .whatsapp-fab { padding: 14px; }
+  .whatsapp-fab-label { display: none; }
 }
